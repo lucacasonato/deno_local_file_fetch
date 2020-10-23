@@ -62,4 +62,4 @@ async function fetch(
   return originalfetch(input, init);
 }
 
-window.fetch = fetch;
+export { fetch };
