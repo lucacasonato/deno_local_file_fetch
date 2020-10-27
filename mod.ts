@@ -4,7 +4,7 @@ const originalfetch = window.fetch;
 
 async function fetch(
   input: string | Request | URL,
-  init?: RequestInit,
+  init?: RequestInit & { method?: "GET" },
 ): Promise<Response> {
   const url = typeof input === "string"
     ? new URL(input)
@@ -13,13 +13,6 @@ async function fetch(
     : input;
 
   if (url.protocol === "file:") {
-    // Only allow GET requests
-    if (init && init.method && init.method !== "GET") {
-      throw new TypeError(
-        `${init.method} is not a supported method for file:// URLs.`,
-      );
-    }
-
     // Open the file, and convert to ReadableStream
     const file = await Deno.open(url, { read: true }).catch((err) => {
       if (err instanceof Deno.errors.NotFound) {
