@@ -1,4 +1,4 @@
-import { lookup } from "https://deno.land/x/media_types@v2.5.1/mod.ts";
+import { lookup } from "https://deno.land/x/media_types@v2.5.2/mod.ts";
 
 const originalfetch = window.fetch;
 
