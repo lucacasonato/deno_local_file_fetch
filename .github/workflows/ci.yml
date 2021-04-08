@@ -30,11 +30,11 @@ jobs:
         run: deno upgrade --canary
 
       - name: Format
-        if: runner.os == 'Windows'
+        if: runner.os == 'Linux'
         run: deno fmt --check
 
       - name: Lint
-        if: runner.os == 'Windows'
+        if: runner.os == 'Linux'
         run: deno lint --unstable
 
       - name: Run Tests
