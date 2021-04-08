@@ -25,5 +25,13 @@ jobs:
         with:
           deno-version: ${{ matrix.deno }}
 
+      - name: Format
+        if: runner.os == 'Windows'
+        run: deno fmt --check
+
+      - name: Lint
+        if: runner.os == 'Windows'
+        run: deno lint --unstable
+
       - name: Run Tests
         run: deno test -A
