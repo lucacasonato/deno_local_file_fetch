@@ -1,5 +1,5 @@
 import "./polyfill.ts";
-import { assertEquals } from "https://deno.land/std@0.74.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.92.0/testing/asserts.ts";
 
 Deno.test("fetch local file URL", async () => {
   const req = await fetch(new URL("./fixtures/test.json", import.meta.url));
