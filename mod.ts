@@ -56,7 +56,16 @@ async function fetch(
     }
 
     // Create 200 streaming response
-    return new Response(body, { status: 200, headers });
+    const response = new Response(body, { status: 200, headers });
+    Object.defineProperty(response, "url", {
+      get() {
+        return url;
+      },
+      configurable: true,
+      enumerable: true,
+      writable: true,
+    });
+    return response;
   }
 
   return originalfetch(input, init);
