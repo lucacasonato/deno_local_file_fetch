@@ -9,6 +9,12 @@ Deno.test("fetch local file URL", async () => {
   assertEquals(json, { hello: "world" });
 });
 
+Deno.test("fetch local file URL (larger)", async () => {
+  const response = await fetch(new URL("./fixtures/lorem.txt", import.meta.url));
+  const text = await response.text();
+  assertEquals(text, await Deno.readTextFile("./fixtures/lorem.txt"));
+});
+
 Deno.test("fetch 1MB file", async () => {
   const { size } = await Deno.stat("fixtures/1MB.file");
   const response = await fetch(new URL("./fixtures/1MB.file", import.meta.url));

@@ -34,7 +34,7 @@ async function fetch(
     const body = new ReadableStream<Uint8Array>({
       start: async (controller) => {
         for await (const chunk of Deno.iter(file)) {
-          controller.enqueue(chunk);
+          controller.enqueue(chunk.slice(0));
         }
         file.close();
         controller.close();
