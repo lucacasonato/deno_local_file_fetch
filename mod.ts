@@ -1,6 +1,7 @@
 import { lookup } from "https://deno.land/x/media_types@v2.7.1/mod.ts";
+import { iter } from "https://deno.land/std@0.97.0/io/util.ts";
 
-const originalfetch = window.fetch;
+const originalfetch = globalThis.fetch;
 
 async function fetch(
   input: string | Request | URL,
@@ -33,7 +34,7 @@ async function fetch(
     }
     const body = new ReadableStream<Uint8Array>({
       start: async (controller) => {
-        for await (const chunk of Deno.iter(file)) {
+        for await (const chunk of iter(file)) {
           controller.enqueue(chunk.slice(0));
         }
         file.close();
@@ -63,7 +64,6 @@ async function fetch(
       },
       configurable: true,
       enumerable: true,
-      writable: true,
     });
     return response;
   }
