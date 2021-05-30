@@ -1,4 +1,4 @@
-import { lookup } from "https://deno.land/x/media_types@v2.7.1/mod.ts";
+import { lookup } from "https://deno.land/x/media_types@v2.8.4/mod.ts";
 import { iter } from "https://deno.land/std@0.97.0/io/util.ts";
 
 const originalfetch = globalThis.fetch;
