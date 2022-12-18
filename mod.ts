@@ -1,5 +1,5 @@
-import { lookup } from "https://deno.land/x/media_types@v2.8.4/mod.ts";
-import { iter } from "https://deno.land/std@0.97.0/io/util.ts";
+import { contentType } from "https://deno.land/std@0.168.0/media_types/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.168.0/streams/iterate_reader.ts";
 
 const originalfetch = globalThis.fetch;
 
@@ -34,7 +34,7 @@ async function fetch(
     }
     const body = new ReadableStream<Uint8Array>({
       start: async (controller) => {
-        for await (const chunk of iter(file)) {
+        for await (const chunk of iterateReader(file)) {
           controller.enqueue(chunk.slice(0));
         }
         file.close();
@@ -47,9 +47,10 @@ async function fetch(
 
     // Get meta information
     const headers = new Headers();
-    const contentType = lookup(url.pathname);
-    if (contentType) {
-      headers.set("content-type", contentType);
+    const extension = url.pathname.substring(url.pathname.lastIndexOf("."))
+    const contentTypeHeader = contentType(extension);
+    if (contentTypeHeader) {
+      headers.set("content-type", contentTypeHeader);
     }
     const info = await Deno.stat(url);
     if (info.mtime) {
