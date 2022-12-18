@@ -47,7 +47,7 @@ async function fetch(
 
     // Get meta information
     const headers = new Headers();
-    const extension = url.pathname.substring(url.pathname.lastIndexOf("."))
+    const extension = url.pathname.substring(url.pathname.lastIndexOf("."));
     const contentTypeHeader = contentType(extension);
     if (contentTypeHeader) {
       headers.set("content-type", contentTypeHeader);
